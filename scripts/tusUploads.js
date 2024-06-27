@@ -5,22 +5,29 @@ const getExpiryDate = () => {
 };
 
 function startUpload(file, chunkSize, endpoint) {
-	const fileNameInputValue = document.getElementById('file-name').value || file.name;
-
 	const options = {
 		endpoint: endpoint,
 		chunkSize: chunkSize,
 		metadata: {
 			expiry: getExpiryDate(),
 			maxDurationSeconds: 3600,
-			name: fileNameInputValue, // Use the value from the input or the file name
-			allowedOrigins: ['nzfishingworld.co.nz', 'www.nzfishingworld.co.nz', 'anglers-planet.webflow.io'],
+			name: file.name,
+			site: 'Anglers Planet',
+			postType: 'Fishing Report',
+			allowedOrigins: ['nzfishingworld.co.nz', 'www.nzfishingworld.co.nz', 'anglers-planet.webflow.io', 'anglers-planet-wip.webflow.io'],
 		},
 		onError(error) {
 			console.error('Upload failed:', error);
 		},
 		onSuccess() {
 			console.log('Upload finished');
+			// Update the #upload-success input to true upon successful upload
+			const uploadSuccessInput = document.getElementById('upload-success');
+			if (uploadSuccessInput) {
+				uploadSuccessInput.checked = true; // Set the checkbox to checked
+				// Optionally, trigger a change event on the input if needed
+				uploadSuccessInput.dispatchEvent(new Event('input', { bubbles: true }));
+			}
 		},
 		onProgress(bytesUploaded, bytesTotal) {
 			const container = document.getElementById('progress-bar-container');
@@ -40,7 +47,15 @@ function startUpload(file, chunkSize, endpoint) {
 					if (mediaIdHeader) {
 						console.log('Media ID:', mediaIdHeader); // Log the media ID or use it as needed
 
-						document.getElementById('vidoe-id').value = mediaIdHeader; // Update the input field with the retrieved media ID
+						document.getElementById('video-id').value = mediaIdHeader; // Update the input field with the retrieved media ID
+						// Create a new 'input' event
+						var event = new Event('input', {
+							bubbles: true,
+							cancelable: true,
+						});
+
+						// Dispatch it on the hidden field
+						document.getElementById('video-id').dispatchEvent(event);
 					}
 				}
 				resolve();
