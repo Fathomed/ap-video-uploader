@@ -6,14 +6,9 @@
 	border: 1px solid gray;
 	display: none;
 }
-
-#progress-bar-fill {
+#progress-bar-fill_1 {
 	height: 100%;
 	width: 0%;
 	transition: 1s ease-in-out all;
-	background-color: #f63;
-}
-
-#upload {
-	width: 100%;
+	background-color: #de324f;
 }
