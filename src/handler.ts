@@ -1,7 +1,7 @@
 'use strict';
 (() => {
 	// src/handler.ts
-	var corsHeaders = {
+	const corsHeaders = {
 		'Access-Control-Allow-Headers': '*',
 		'Access-Control-Expose-Headers': '*',
 		'Access-Control-Allow-Methods': '*',
